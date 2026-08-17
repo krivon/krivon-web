@@ -20,6 +20,7 @@
     --silver-2:#a8afba;
     --silver-3:#e2e6ec;
     --steel:#1a2f52;
+    --wa:#25D366;
     --text-hi:#f3f1ea;
     --text-mid:#9aa0ac;
     --text-low:#5c6470;
@@ -35,12 +36,12 @@
   }
   ::selection{background:var(--gold-2);color:var(--carbon-0);}
 
-  /* ---------- ambient circuit background ---------- */
   .circuit-bg{
     position:fixed;inset:0;z-index:0;pointer-events:none;
     background-image:
       radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,75,0.08), transparent 60%),
-      radial-gradient(ellipse 700px 500px at 100% 30%, rgba(26,47,82,0.35), transparent 60%);
+      radial-gradient(ellipse 700px 500px at 100% 30%, rgba(26,47,82,0.35), transparent 60%),
+      radial-gradient(ellipse 800px 600px at 0% 80%, rgba(201,162,75,0.06), transparent 60%);
   }
   .circuit-svg{position:fixed;inset:0;z-index:0;opacity:0.16;pointer-events:none;}
 
@@ -78,7 +79,6 @@
 
   .container{max-width:1280px;margin:0 auto;padding:0 40px;position:relative;z-index:2;}
 
-  /* ---------- NAVBAR ---------- */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     background:rgba(7,8,10,0.72);
@@ -97,7 +97,7 @@
   .brand-word{
     font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.08em;
   }
-  .nav-links{display:flex;gap:34px;font-size:13px;letter-spacing:0.04em;font-weight:500;color:var(--text-mid);}
+  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:0.04em;font-weight:500;color:var(--text-mid);}
   .nav-links a{position:relative;padding:6px 0;transition:color .25s;}
   .nav-links a::after{
     content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
@@ -124,18 +124,24 @@
     transition:border-color .25s, background .25s;
   }
   .btn-outline:hover{border-color:var(--silver-2);background:rgba(255,255,255,0.03);}
-  .btn-nav-cta{
-    padding:11px 20px;font-size:12px;
+  .btn-nav-cta{padding:11px 20px;font-size:12px;}
+  .nav-cta-wrap{display:flex;align-items:center;gap:12px;}
+
+  .btn-wa{
+    background:linear-gradient(120deg,#1c9e50,var(--wa) 60%);
+    color:#04170c;
+    box-shadow:0 0 0 1px rgba(37,211,102,0.3), 0 8px 20px -6px rgba(37,211,102,0.5);
+    transition:transform .25s, box-shadow .25s;
   }
-  .nav-cta-wrap{display:flex;align-items:center;}
+  .btn-wa:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(37,211,102,0.45), 0 12px 26px -6px rgba(37,211,102,0.6);}
+  .btn-wa svg{width:15px;height:15px;fill:currentColor;}
 
   .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
   .burger span{width:22px;height:2px;background:var(--gold-2);display:block;}
 
-  /* ---------- HERO ---------- */
   .hero{
     position:relative;
-    padding:190px 0 120px;
+    padding:190px 0 80px;
     display:flex;align-items:center;gap:60px;
     min-height:100vh;
   }
@@ -144,11 +150,20 @@
   .hero-copy .sub{
     font-size:16px;line-height:1.7;color:var(--text-mid);max-width:520px;margin-bottom:38px;
   }
-  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:48px;}
-  .hero-stats{display:flex;gap:40px;border-top:1px solid var(--line);padding-top:26px;}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px;}
+  .hero-stats{display:flex;gap:40px;border-top:1px solid var(--line);padding-top:26px;margin-bottom:38px;}
   .hero-stats div{display:flex;flex-direction:column;gap:4px;}
   .hero-stats .num{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;}
   .hero-stats .lbl{font-size:11px;letter-spacing:0.06em;color:var(--text-low);text-transform:uppercase;}
+
+  .hero-chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.04em;
+    color:var(--silver-2);border:1px solid var(--line);padding:8px 14px;border-radius:20px;
+    display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s;
+  }
+  .chip:hover{border-color:var(--gold-2);color:var(--gold-3);}
+  .chip .dot{width:5px;height:5px;border-radius:50%;background:var(--gold-2);}
 
   .hero-visual{
     position:relative;display:flex;align-items:center;justify-content:center;
@@ -158,10 +173,7 @@
     position:relative;width:100%;max-width:480px;aspect-ratio:1/1;
     display:flex;align-items:center;justify-content:center;
   }
-  .stage-ring{
-    position:absolute;inset:0;border-radius:50%;
-    border:1px solid var(--line);
-  }
+  .stage-ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);}
   .stage-ring.r2{inset:40px;border-color:rgba(201,162,75,0.18);}
   .stage-ring.r3{inset:80px;border-color:rgba(168,175,186,0.12);}
   .stage-glow{
@@ -187,14 +199,29 @@
     position:absolute;width:6px;height:6px;border-radius:50%;
     background:var(--gold-3);box-shadow:0 0 10px 2px rgba(240,215,140,0.7);
   }
+  .float-tag{
+    position:absolute;background:var(--carbon-1);border:1px solid var(--line);
+    padding:9px 14px;border-radius:6px;font-size:11px;font-family:'Space Mono',monospace;
+    color:var(--silver-2);display:flex;align-items:center;gap:8px;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.6);
+    animation:floatTag 7s ease-in-out infinite;
+  }
+  .float-tag svg{width:14px;height:14px;stroke:var(--gold-2);}
+  .float-tag.t1{top:6%;left:-4%;animation-delay:.2s;}
+  .float-tag.t2{bottom:10%;right:-6%;animation-delay:1.2s;}
+  @keyframes floatTag{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+  }
 
-  /* ---------- SECTION SHARED ---------- */
   section{position:relative;z-index:2;padding:120px 0;}
   .section-head{max-width:640px;margin-bottom:64px;}
   .section-head h2{font-size:clamp(28px,3.2vw,42px);margin-top:14px;}
   .section-head p{color:var(--text-mid);font-size:15px;line-height:1.7;margin-top:16px;}
+  .section-head.center{max-width:680px;margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head.center .eyebrow{justify-content:center;}
+  .section-head.center .eyebrow::before{display:none;}
 
-  /* ---------- SOLUTIONS ---------- */
   .solutions{background:linear-gradient(180deg, var(--carbon-0), var(--carbon-1) 30%, var(--carbon-1) 70%, var(--carbon-0));border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .modules{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
   .module{
@@ -224,7 +251,49 @@
   }
   .module-icon svg{width:22px;height:22px;stroke:var(--gold-2);}
 
-  /* ---------- VALUE PROPS ---------- */
+  .catalog{background:var(--carbon-0);}
+  .catalog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .product-card{
+    background:var(--carbon-1);border:1px solid var(--line);border-radius:6px;
+    padding:30px 26px;position:relative;overflow:hidden;
+    transition:transform .3s, border-color .3s, background .3s;
+  }
+  .product-card:hover{transform:translateY(-5px);border-color:rgba(201,162,75,0.4);background:var(--carbon-2);}
+  .product-card .p-icon{
+    width:52px;height:52px;border-radius:10px;margin-bottom:20px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--carbon-2),var(--carbon-3));
+    border:1px solid var(--line);position:relative;
+  }
+  .product-card .p-icon::after{
+    content:'';position:absolute;inset:0;border-radius:10px;
+    background:radial-gradient(circle at 30% 20%, rgba(201,162,75,0.18), transparent 60%);
+  }
+  .product-card .p-icon svg{width:26px;height:26px;stroke:var(--gold-2);position:relative;z-index:1;}
+  .product-card h3{
+    font-size:16px;text-transform:none;letter-spacing:0;font-weight:600;margin-bottom:10px;line-height:1.3;
+  }
+  .product-card .p-items{font-size:12.5px;color:var(--text-mid);line-height:1.9;margin-bottom:18px;}
+  .product-card .p-badge{
+    position:absolute;top:20px;right:20px;font-family:'Space Mono',monospace;font-size:9px;
+    color:var(--gold-2);border:1px solid rgba(201,162,75,0.35);padding:3px 8px;border-radius:10px;
+    letter-spacing:0.06em;
+  }
+  .p-quote{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--wa);
+    padding-top:14px;border-top:1px solid var(--line);width:100%;
+  }
+  .p-quote svg{width:13px;height:13px;fill:currentColor;}
+  .p-quote:hover{color:#3ee87f;}
+
+  .catalog-note{
+    margin-top:44px;display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:20px;padding:28px 32px;border:1px solid var(--line);border-radius:6px;
+    background:linear-gradient(120deg,var(--carbon-1),var(--carbon-2));
+  }
+  .catalog-note p{font-size:14px;color:var(--text-mid);max-width:520px;line-height:1.6;}
+  .catalog-note strong{color:var(--text-hi);}
+
   .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
   .value-card{
     background:var(--carbon-1);border:1px solid var(--line);padding:40px 34px;border-radius:4px;
@@ -239,7 +308,6 @@
     position:absolute;bottom:0;left:0;height:2px;width:36px;background:linear-gradient(90deg,var(--gold-2),transparent);
   }
 
-  /* ---------- CTA BAND ---------- */
   .cta-band{
     background:linear-gradient(120deg,var(--carbon-2),var(--steel) 130%);
     border-top:1px solid var(--line);border-bottom:1px solid var(--line);
@@ -248,12 +316,12 @@
   .cta-band .container{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;}
   .cta-band h2{font-size:clamp(24px,2.6vw,32px);max-width:560px;}
   .cta-band .eyebrow{margin-bottom:14px;}
+  .cta-band .cta-actions{display:flex;gap:14px;flex-wrap:wrap;}
 
-  /* ---------- FOOTER ---------- */
   footer{background:var(--carbon-0);border-top:1px solid var(--line);padding:90px 0 30px;position:relative;z-index:2;}
   .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr;gap:50px;margin-bottom:70px;}
   .footer-brand .brand{margin-bottom:18px;}
-  .footer-brand p{font-size:14px;color:var(--text-mid);line-height:1.7;max-width:280px;}
+  .footer-brand p{font-size:14px;color:var(--text-mid);line-height:1.7;max-width:280px;margin-bottom:22px;}
   .footer-col h4{
     font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
     color:var(--silver-2);margin-bottom:20px;
@@ -262,6 +330,10 @@
   .footer-col a:hover{color:var(--gold-2);}
   .footer-contact div{font-size:14px;color:var(--text-mid);margin-bottom:12px;}
   .footer-contact strong{color:var(--text-hi);font-weight:500;}
+  .footer-wa{
+    display:inline-flex;align-items:center;gap:8px;color:var(--wa);font-weight:600;font-size:14px;margin-top:4px;
+  }
+  .footer-wa svg{width:15px;height:15px;fill:currentColor;}
 
   .contact-form{display:flex;flex-direction:column;gap:12px;}
   .contact-form input, .contact-form textarea{
@@ -280,7 +352,22 @@
   }
   .footer-bottom .fb-links{display:flex;gap:22px;}
 
-  /* ---------- MISC ---------- */
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:200;
+    width:60px;height:60px;border-radius:50%;
+    background:linear-gradient(150deg,#1c9e50,var(--wa));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px -6px rgba(37,211,102,0.55), 0 0 0 1px rgba(37,211,102,0.3);
+    animation:waPulse 2.6s ease-in-out infinite;
+    transition:transform .25s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:30px;height:30px;fill:#04170c;}
+  @keyframes waPulse{
+    0%,100%{box-shadow:0 10px 30px -6px rgba(37,211,102,0.55), 0 0 0 1px rgba(37,211,102,0.3);}
+    50%{box-shadow:0 10px 34px -4px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.08);}
+  }
+
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
 
@@ -288,16 +375,17 @@
     *{animation:none !important;transition:none !important;}
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width:980px){
     .nav-links{display:none;}
     .burger{display:flex;}
     .hero .container{grid-template-columns:1fr;}
     .hero-visual{order:-1;max-width:340px;margin:0 auto 20px;}
     .modules{grid-template-columns:1fr;}
+    .catalog-grid{grid-template-columns:repeat(2,1fr);}
     .value-grid{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;}
     .cta-band .container{flex-direction:column;align-items:flex-start;}
+    .float-tag{display:none;}
   }
   @media (max-width:600px){
     .container{padding:0 22px;}
@@ -306,6 +394,9 @@
     .hero-stats{gap:24px;flex-wrap:wrap;}
     .footer-grid{grid-template-columns:1fr;gap:40px;}
     .module{padding:34px 26px;}
+    .catalog-grid{grid-template-columns:1fr;}
+    .wa-float{width:52px;height:52px;bottom:18px;right:18px;}
+    .wa-float svg{width:26px;height:26px;}
   }
 </style>
 </head>
@@ -325,6 +416,10 @@
   <rect width="100%" height="100%" fill="url(#circuit)"/>
 </svg>
 
+<a class="wa-float" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp con KRIVON">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.1 1.2-4.4-.3-.4A9.7 9.7 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.4-.1-.6.1-.7 1-.9 1.1-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+
 <header>
   <nav>
     <div class="brand">
@@ -334,13 +429,17 @@
     <div class="nav-links">
       <a href="#inicio">Inicio</a>
       <a href="#soluciones">Soluciones</a>
-      <a href="#portafolio">Portafolio</a>
+      <a href="#catalogo">Catálogo</a>
       <a href="#conectamos">Nos Conectamos</a>
       <a href="#casos">Casos de Éxito</a>
       <a href="#contacto">Contacto</a>
     </div>
     <div class="nav-cta-wrap">
-      <a href="#contacto" class="btn btn-primary btn-nav-cta">Agendar Diagnóstico Corporativo</a>
+      <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa btn-nav-cta">
+        <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.1 1.2-4.4-.3-.4A9.7 9.7 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#contacto" class="btn btn-primary btn-nav-cta">Agendar Diagnóstico</a>
     </div>
     <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </nav>
@@ -355,12 +454,20 @@
         <p class="sub">Optimizamos, protegemos y modernizamos los ecosistemas digitales de empresas y profesionales con estándares de ingeniería de vanguardia.</p>
         <div class="hero-ctas">
           <a href="#contacto" class="btn btn-primary">Solicitar Solución Empresarial</a>
-          <a href="#soluciones" class="btn btn-outline">Ver Catálogo de Servicios</a>
+          <a href="#catalogo" class="btn btn-outline">Ver Catálogo de Servicios</a>
         </div>
         <div class="hero-stats">
           <div><span class="num silver-text">24/7</span><span class="lbl">Helpdesk B2B</span></div>
           <div><span class="num silver-text">0</span><span class="lbl">Interrupciones objetivo</span></div>
           <div><span class="num silver-text">100%</span><span class="lbl">Licenciamiento oficial</span></div>
+        </div>
+        <div class="hero-chips">
+          <a href="#catalogo" class="chip"><span class="dot"></span>Laptops</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>PC Escritorio</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Monitores</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Teclados & Mouse</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Memorias RAM</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Redes</a>
         </div>
       </div>
 
@@ -371,6 +478,8 @@
           <div class="stage-ring r2"></div>
           <div class="stage-ring r3"></div>
           <img class="shield-img" src="assets/krivon-shield.png" alt="Escudo metálico KRIVON sobre circuito">
+          <div class="float-tag t1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z"/></svg>Firewall activo</div>
+          <div class="float-tag t2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/></svg>Backup en la nube</div>
         </div>
       </div>
     </div>
@@ -425,6 +534,92 @@
     </div>
   </section>
 
+  <section class="catalog" id="catalogo">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="eyebrow">Catálogo KRIVON</div>
+        <h2>Equipos & <span class="gold-text">Accesorios Tecnológicos</span></h2>
+        <p>Todo lo que tu empresa o equipo necesita, con garantía y licenciamiento 100% original. Cotiza cualquier categoría directo por WhatsApp.</p>
+      </div>
+
+      <div class="catalog-grid reveal">
+
+        <div class="product-card">
+          <span class="p-badge">STOCK</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M2 19h20M9 16v3M15 16v3"/></svg></div>
+          <h3>Laptops Empresariales & Gamer</h3>
+          <div class="p-items">Ultrabooks corporativos · Estaciones móviles de diseño · Gama gamer alto rendimiento</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">A MEDIDA</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="9" height="18" rx="1.2"/><circle cx="8.5" cy="17.5" r="1"/><path d="M17 6h3M17 9h3M17 12h3"/></svg></div>
+          <h3>Equipos de Escritorio (Desktop)</h3>
+          <div class="p-items">PC Oficina y Productividad · Workstations de Diseño · Torres Gamer a medida</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">HD / 4K</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="1.2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>Monitores & Pantallas Profesionales</h3>
+          <div class="p-items">Paneles Full HD / 2K / 4K · Alta tasa de refresco · Multi-monitor para oficina</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">ERGONÓMICO</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="1.5"/><path d="M6 11v2M10 11v2M14 11v2M18 11v2"/></svg></div>
+          <h3>Teclados, Mouse & Periféricos</h3>
+          <div class="p-items">Mecánicos y de membrana · Ergonómicos oficina · Gamer alta precisión</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">ALTO RENDIMIENTO</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="1.5"/><path d="M9 3v18M15 3v18M6 8h3M6 13h3"/></svg></div>
+          <h3>Memorias RAM & Almacenamiento</h3>
+          <div class="p-items">RAM DDR4 / DDR5 · SSD NVMe & SATA · Discos duros HDD alta capacidad</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">UPGRADE</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v2M15 3v2M9 19v2M15 19v2M3 9h2M3 15h2M19 9h2M19 15h2"/></svg></div>
+          <h3>Componentes & Tarjetas de Video</h3>
+          <div class="p-items">Procesadores Intel/AMD · Tarjetas gráficas GPU · Fuentes de poder certificadas</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">EMPRESARIAL</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M4 19c0-4.4 3.6-8 8-8s8 3.6 8 8"/><path d="M12 13v-2"/></svg></div>
+          <h3>Redes & Conectividad</h3>
+          <div class="p-items">Routers y Switches administrables · Access Points Wi-Fi 6 · Cableado estructurado</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">OFICINA</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="11" rx="1.5"/><path d="M9 21h6M8 6V4h8v2"/></svg></div>
+          <h3>Accesorios & Ergonomía</h3>
+          <div class="p-items">Bases y hubs USB-C · Webcams y audífonos · Soportes ergonómicos ajustables</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+      </div>
+
+      <div class="catalog-note reveal">
+        <p><strong>¿No encuentras lo que buscas?</strong> Manejamos catálogo ampliado con proveedores certificados. Cuéntanos tu proyecto y armamos una cotización a medida en menos de 24h.</p>
+        <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Hablar con un Ingeniero
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section id="conectamos">
     <div class="container">
       <div class="section-head reveal">
@@ -460,7 +655,13 @@
         <div class="eyebrow">Portafolio & Casos de Éxito</div>
         <h2>Diagnosticamos tu ecosistema digital <span class="silver-text">antes de intervenirlo</span></h2>
       </div>
-      <a href="#contacto" class="btn btn-primary">Agendar Diagnóstico Corporativo</a>
+      <div class="cta-actions">
+        <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <a href="#contacto" class="btn btn-primary">Agendar Diagnóstico Corporativo</a>
+      </div>
     </div>
   </section>
 </main>
@@ -473,13 +674,17 @@
           <img src="assets/krivon-shield.png" alt="Escudo KRIVON" style="height:40px;">
           <span class="brand-word gold-text">KRIVON</span>
         </div>
-        <p>Ingeniería e innovación completa. Tu aliado tecnológico total en infraestructura, ciberseguridad, licenciamiento y soporte especializado.</p>
+        <p>Ingeniería e innovación completa. Tu aliado tecnológico total en infraestructura, ciberseguridad, licenciamiento, catálogo de equipos y soporte especializado.</p>
+        <a class="footer-wa" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Chatea con nosotros
+        </a>
       </div>
       <div class="footer-col">
         <h4>Navegación</h4>
         <a href="#inicio">Inicio</a>
         <a href="#soluciones">Soluciones</a>
-        <a href="#portafolio">Portafolio</a>
+        <a href="#catalogo">Catálogo</a>
         <a href="#casos">Casos de Éxito</a>
       </div>
       <div class="footer-col footer-contact">
@@ -509,14 +714,12 @@
 </footer>
 
 <script>
-  // reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.15});
   revealEls.forEach(el=>io.observe(el));
 
-  // orbiting dots around shield
   const stage = document.querySelector('.shield-stage');
   if(stage){
     const dots = 3;
@@ -524,7 +727,6 @@
       const d = document.createElement('div');
       d.className='orbit-dot';
       stage.appendChild(d);
-      const radius = 44 + i*7; // percent-ish via px fallback handled by JS below
       let angle = (360/dots)*i;
       const speed = 0.15 + i*0.05;
       function animate(){
@@ -542,7 +744,6 @@
     }
   }
 
-  // mobile burger -> simple toggle showing links stacked
   const burger = document.querySelector('.burger');
   const navLinks = document.querySelector('.nav-links');
   burger.addEventListener('click', ()=>{
