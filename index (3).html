@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRIVON | Ingeniería, Innovación & Soluciones Tecnológicas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon-0:#07080a;
+    --carbon-1:#0d0f13;
+    --carbon-2:#14171d;
+    --carbon-3:#1c2027;
+    --line:#272c35;
+    --gold-1:#8a6a2c;
+    --gold-2:#c9a24b;
+    --gold-3:#f0d78c;
+    --silver-1:#6b7280;
+    --silver-2:#a8afba;
+    --silver-3:#e2e6ec;
+    --steel:#1a2f52;
+    --wa:#25D366;
+    --text-hi:#f3f1ea;
+    --text-mid:#9aa0ac;
+    --text-low:#5c6470;
+    --bot-eye:#f0d78c;
+    --bot-body-1:#1c2027;
+    --bot-body-2:#272c35;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--carbon-0);
+    color:var(--text-hi);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  ::selection{background:var(--gold-2);color:var(--carbon-0);}
+
+  .circuit-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,75,0.08), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 30%, rgba(26,47,82,0.35), transparent 60%),
+      radial-gradient(ellipse 800px 600px at 0% 80%, rgba(201,162,75,0.06), transparent 60%);
+  }
+  .circuit-svg{position:fixed;inset:0;z-index:0;opacity:0.10;pointer-events:none;}
+
+  .tech-canvas{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:0.55;
+  }
+  .scan-line{
+    position:fixed;left:0;right:0;height:2px;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(201,162,75,0.55) 20%, rgba(240,215,140,0.85) 50%, rgba(201,162,75,0.55) 80%, transparent);
+    box-shadow:0 0 12px 2px rgba(201,162,75,0.35);
+    animation:scanSweep 9s linear infinite;
+  }
+  @keyframes scanSweep{
+    0%{top:-2px;opacity:0;}
+    5%{opacity:0.7;}
+    95%{opacity:0.7;}
+    100%{top:100%;opacity:0;}
+  }
+
+  a{color:inherit;text-decoration:none;}
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.28em;
+    font-size:11px;
+    color:var(--gold-2);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--gold-2);display:inline-block;}
+
+  h1,h2,h3,.display{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:600;
+    line-height:1.05;
+  }
+
+  .gold-text{
+    background:linear-gradient(115deg, var(--gold-1) 10%, var(--gold-3) 45%, var(--gold-2) 65%, var(--gold-1) 90%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .silver-text{
+    background:linear-gradient(115deg, var(--silver-1) 10%, var(--silver-3) 45%, var(--silver-2) 70%, var(--silver-1) 90%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .container{max-width:1280px;margin:0 auto;padding:0 40px;position:relative;z-index:2;}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(7,8,10,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    transition:border-color .3s;
+  }
+  nav{
+    max-width:1280px;margin:0 auto;padding:16px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{
+    height:44px;width:44px;object-fit:cover;border-radius:50%;
+    border:1.5px solid rgba(201,162,75,0.55);
+    background:var(--carbon-2);
+    filter:drop-shadow(0 0 10px rgba(201,162,75,0.35));
+  }
+  .brand-word{
+    font-family:'Oswald',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.08em;
+  }
+  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:0.04em;font-weight:500;color:var(--text-mid);}
+  .nav-links a{position:relative;padding:6px 0;transition:color .25s;}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:linear-gradient(90deg,var(--gold-2),var(--gold-3));transition:width .25s;
+  }
+  .nav-links a:hover{color:var(--text-hi);}
+  .nav-links a:hover::after{width:100%;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:0.03em;
+    padding:13px 26px;border-radius:3px;cursor:pointer;border:1px solid transparent;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(120deg,var(--gold-1),var(--gold-3) 45%,var(--gold-2) 75%);
+    color:var(--carbon-0);
+    box-shadow:0 0 0 1px rgba(240,215,140,0.25), 0 8px 24px -6px rgba(201,162,75,0.5);
+    transition:transform .25s, box-shadow .25s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(240,215,140,0.4), 0 14px 30px -6px rgba(201,162,75,0.65);}
+  .btn-outline{
+    background:transparent;border:1px solid var(--line);color:var(--text-hi);
+    transition:border-color .25s, background .25s;
+  }
+  .btn-outline:hover{border-color:var(--silver-2);background:rgba(255,255,255,0.03);}
+  .btn-nav-cta{padding:10px 18px;font-size:11.5px;border-radius:24px;}
+  .nav-cta-wrap{display:flex;align-items:center;gap:10px;}
+
+  .btn-wa{
+    background:linear-gradient(120deg,#1c9e50,var(--wa) 60%);
+    color:#04170c;
+    box-shadow:0 0 0 1px rgba(37,211,102,0.3), 0 6px 16px -6px rgba(37,211,102,0.5);
+    transition:transform .25s, box-shadow .25s;
+  }
+  .btn-wa:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(37,211,102,0.45), 0 10px 22px -6px rgba(37,211,102,0.6);}
+  .btn-wa svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
+  .btn-primary.btn-nav-cta{border-radius:24px;}
+
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+  .burger span{width:22px;height:2px;background:var(--gold-2);display:block;}
+
+  .hero{
+    position:relative;
+    padding:190px 0 80px;
+    display:flex;align-items:center;gap:60px;
+    min-height:100vh;
+  }
+  .hero .container{display:grid;grid-template-columns:1.05fr 0.95fr;gap:50px;align-items:center;}
+  .hero-copy h1{font-size:clamp(34px,4.4vw,58px);margin-bottom:26px;}
+  .hero-copy .sub{
+    font-size:16px;line-height:1.7;color:var(--text-mid);max-width:520px;margin-bottom:38px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px;}
+  .hero-stats{display:flex;gap:40px;border-top:1px solid var(--line);padding-top:26px;margin-bottom:38px;}
+  .hero-stats div{display:flex;flex-direction:column;gap:4px;}
+  .hero-stats .num{font-family:'Oswald',sans-serif;font-size:26px;font-weight:600;}
+  .hero-stats .lbl{font-size:11px;letter-spacing:0.06em;color:var(--text-low);text-transform:uppercase;}
+
+  .hero-chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.04em;
+    color:var(--silver-2);border:1px solid var(--line);padding:8px 14px;border-radius:20px;
+    display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s;
+  }
+  .chip:hover{border-color:var(--gold-2);color:var(--gold-3);}
+  .chip .dot{width:5px;height:5px;border-radius:50%;background:var(--gold-2);}
+
+  .hero-visual{
+    position:relative;display:flex;align-items:center;justify-content:center;
+    perspective:1200px;
+  }
+  .shield-stage{
+    position:relative;width:100%;max-width:480px;aspect-ratio:1/1;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stage-ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);}
+  .stage-ring.r2{inset:40px;border-color:rgba(201,162,75,0.18);}
+  .stage-ring.r3{inset:80px;border-color:rgba(168,175,186,0.12);}
+  .stage-glow{
+    position:absolute;inset:-10%;
+    background:radial-gradient(circle, rgba(201,162,75,0.22), transparent 65%);
+    filter:blur(10px);
+    animation:pulseGlow 5s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{
+    0%,100%{opacity:0.7;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.06);}
+  }
+  .shield-img{
+    position:relative;z-index:3;width:60%;aspect-ratio:1/1;object-fit:cover;
+    border-radius:50%;
+    border:2px solid rgba(201,162,75,0.5);
+    box-shadow:0 0 0 10px rgba(201,162,75,0.05), 0 20px 50px rgba(0,0,0,0.6);
+    filter:drop-shadow(0 20px 50px rgba(0,0,0,0.6));
+    animation:floatShield 6s ease-in-out infinite;
+  }
+  @keyframes floatShield{
+    0%,100%{transform:translateY(0px) rotate(0deg);}
+    50%{transform:translateY(-14px) rotate(1deg);}
+  }
+  .orbit-dot{
+    position:absolute;width:6px;height:6px;border-radius:50%;
+    background:var(--gold-3);box-shadow:0 0 10px 2px rgba(240,215,140,0.7);
+  }
+  .float-tag{
+    position:absolute;background:var(--carbon-1);border:1px solid var(--line);
+    padding:9px 14px;border-radius:6px;font-size:11px;font-family:'Space Mono',monospace;
+    color:var(--silver-2);display:flex;align-items:center;gap:8px;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.6);
+    animation:floatTag 7s ease-in-out infinite;
+  }
+  .float-tag svg{width:14px;height:14px;stroke:var(--gold-2);}
+  .float-tag.t1{top:6%;left:-4%;animation-delay:.2s;}
+  .float-tag.t2{bottom:10%;right:-6%;animation-delay:1.2s;}
+  @keyframes floatTag{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+  }
+
+  section{position:relative;z-index:2;padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-head h2{font-size:clamp(28px,3.2vw,42px);margin-top:14px;}
+  .section-head p{color:var(--text-mid);font-size:15px;line-height:1.7;margin-top:16px;}
+  .section-head.center{max-width:680px;margin-left:auto;margin-right:auto;text-align:center;}
+  .section-head.center .eyebrow{justify-content:center;}
+  .section-head.center .eyebrow::before{display:none;}
+
+  .solutions{background:linear-gradient(180deg, var(--carbon-0), var(--carbon-1) 30%, var(--carbon-1) 70%, var(--carbon-0));border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .modules{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .module{
+    background:var(--carbon-1);padding:44px 42px;position:relative;overflow:hidden;
+    transition:background .3s;
+  }
+  .module:hover{background:var(--carbon-2);}
+  .module::before{
+    content:'';position:absolute;top:0;left:0;width:0%;height:2px;
+    background:linear-gradient(90deg,var(--gold-2),var(--gold-3));transition:width .4s;
+  }
+  .module:hover::before{width:100%;}
+  .module-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--silver-2);letter-spacing:0.15em;}
+  .module h3{font-size:21px;margin:16px 0 18px;line-height:1.2;}
+  .module ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .module li{
+    font-size:14px;color:var(--text-mid);line-height:1.6;padding-left:20px;position:relative;
+  }
+  .module li::before{
+    content:'';position:absolute;left:0;top:8px;width:8px;height:1px;background:var(--gold-2);
+  }
+  .module-icon{
+    width:46px;height:46px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--carbon-2);border:1px solid var(--line);
+    margin-bottom:6px;
+  }
+  .module-icon svg{width:22px;height:22px;stroke:var(--gold-2);}
+
+  .catalog{background:var(--carbon-0);}
+  .catalog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .product-card{
+    background:var(--carbon-1);border:1px solid var(--line);border-radius:6px;
+    padding:30px 26px;position:relative;overflow:hidden;
+    transition:transform .3s, border-color .3s, background .3s;
+  }
+  .product-card:hover{transform:translateY(-5px);border-color:rgba(201,162,75,0.4);background:var(--carbon-2);}
+  .product-card .p-icon{
+    width:52px;height:52px;border-radius:10px;margin-bottom:20px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--carbon-2),var(--carbon-3));
+    border:1px solid var(--line);position:relative;
+  }
+  .product-card .p-icon::after{
+    content:'';position:absolute;inset:0;border-radius:10px;
+    background:radial-gradient(circle at 30% 20%, rgba(201,162,75,0.18), transparent 60%);
+  }
+  .product-card .p-icon svg{width:26px;height:26px;stroke:var(--gold-2);position:relative;z-index:1;}
+  .product-card h3{
+    font-size:16px;text-transform:none;letter-spacing:0;font-weight:600;margin-bottom:10px;line-height:1.3;
+  }
+  .product-card .p-items{font-size:12.5px;color:var(--text-mid);line-height:1.9;margin-bottom:18px;}
+  .product-card .p-badge{
+    position:absolute;top:20px;right:20px;font-family:'Space Mono',monospace;font-size:9px;
+    color:var(--gold-2);border:1px solid rgba(201,162,75,0.35);padding:3px 8px;border-radius:10px;
+    letter-spacing:0.06em;
+  }
+  .p-quote{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--wa);
+    padding-top:14px;border-top:1px solid var(--line);width:100%;
+  }
+  .p-quote svg{width:13px;height:13px;fill:currentColor;}
+  .p-quote:hover{color:#3ee87f;}
+
+  .catalog-note{
+    margin-top:44px;display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:20px;padding:28px 32px;border:1px solid var(--line);border-radius:6px;
+    background:linear-gradient(120deg,var(--carbon-1),var(--carbon-2));
+  }
+  .catalog-note p{font-size:14px;color:var(--text-mid);max-width:520px;line-height:1.6;}
+  .catalog-note strong{color:var(--text-hi);}
+
+  .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .value-card{
+    background:var(--carbon-1);border:1px solid var(--line);padding:40px 34px;border-radius:4px;
+    position:relative;
+  }
+  .value-card .vnum{
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--gold-2);letter-spacing:0.1em;margin-bottom:22px;display:block;
+  }
+  .value-card h3{font-size:19px;margin-bottom:14px;text-transform:none;letter-spacing:0;font-weight:600;}
+  .value-card p{font-size:14px;color:var(--text-mid);line-height:1.7;}
+  .value-card .vline{
+    position:absolute;bottom:0;left:0;height:2px;width:36px;background:linear-gradient(90deg,var(--gold-2),transparent);
+  }
+
+  .cta-band{
+    background:linear-gradient(120deg,var(--carbon-2),var(--steel) 130%);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:80px 0;
+  }
+  .cta-band .container{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+  .cta-band h2{font-size:clamp(24px,2.6vw,32px);max-width:560px;}
+  .cta-band .eyebrow{margin-bottom:14px;}
+  .cta-band .cta-actions{display:flex;gap:14px;flex-wrap:wrap;}
+
+  footer{background:var(--carbon-0);border-top:1px solid var(--line);padding:90px 0 30px;position:relative;z-index:2;}
+  .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr;gap:50px;margin-bottom:70px;}
+  .footer-brand .brand{margin-bottom:18px;}
+  .footer-brand p{font-size:14px;color:var(--text-mid);line-height:1.7;max-width:280px;margin-bottom:22px;}
+  .footer-col h4{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--silver-2);margin-bottom:20px;
+  }
+  .footer-col a{display:block;font-size:14px;color:var(--text-mid);margin-bottom:12px;transition:color .2s;}
+  .footer-col a:hover{color:var(--gold-2);}
+  .footer-contact div{font-size:14px;color:var(--text-mid);margin-bottom:12px;}
+  .footer-contact strong{color:var(--text-hi);font-weight:500;}
+  .footer-wa{
+    display:inline-flex;align-items:center;gap:8px;color:var(--wa);font-weight:600;font-size:14px;margin-top:4px;
+  }
+  .footer-wa svg{width:15px;height:15px;fill:currentColor;}
+
+  .contact-form{display:flex;flex-direction:column;gap:12px;}
+  .contact-form input, .contact-form textarea{
+    background:var(--carbon-1);border:1px solid var(--line);color:var(--text-hi);
+    padding:12px 14px;border-radius:3px;font-family:'Inter',sans-serif;font-size:13px;
+    outline:none;transition:border-color .2s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{border-color:var(--gold-2);}
+  .contact-form textarea{resize:none;height:70px;}
+  .contact-form button{margin-top:4px;}
+
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:28px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--text-low);flex-wrap:wrap;gap:12px;
+  }
+  .footer-bottom .fb-links{display:flex;gap:22px;}
+
+  .wa-float{
+    position:fixed;bottom:26px;right:26px;z-index:200;
+    width:60px;height:60px;border-radius:50%;
+    background:linear-gradient(150deg,#1c9e50,var(--wa));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px -6px rgba(37,211,102,0.55), 0 0 0 1px rgba(37,211,102,0.3);
+    animation:waPulse 2.6s ease-in-out infinite;
+    transition:transform .25s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:30px;height:30px;fill:#04170c;}
+  @keyframes waPulse{
+    0%,100%{box-shadow:0 10px 30px -6px rgba(37,211,102,0.55), 0 0 0 1px rgba(37,211,102,0.3);}
+    50%{box-shadow:0 10px 34px -4px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.08);}
+  }
+
+  /* ===== Asistente virtual KRV (robot original) ===== */
+  .bot-widget{position:fixed;bottom:100px;right:26px;z-index:210;display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+
+  .bot-float{
+    position:relative;width:64px;height:64px;border-radius:50%;border:1px solid rgba(201,162,75,0.5);
+    background:radial-gradient(circle at 32% 28%, var(--carbon-3), var(--carbon-1) 70%);
+    box-shadow:0 10px 30px -6px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,162,75,0.15);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    animation:botFloatBob 3.6s ease-in-out infinite;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .bot-float:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 34px -6px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,75,0.3);}
+  .bot-float-svg{width:44px;height:44px;position:relative;z-index:2;}
+  .bot-float-glow{
+    position:absolute;inset:-6px;border-radius:50%;
+    background:radial-gradient(circle, rgba(201,162,75,0.28), transparent 68%);
+    filter:blur(4px);animation:pulseGlow 4.2s ease-in-out infinite;
+  }
+  .bot-ping{
+    position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;
+    background:var(--wa);box-shadow:0 0 8px 2px rgba(37,211,102,0.7);
+    animation:botPing 2.4s ease-in-out infinite;
+  }
+  @keyframes botFloatBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  @keyframes botPing{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.55;transform:scale(0.85);}}
+
+  .krv-eye{animation:krvBlink 4.5s ease-in-out infinite;transform-origin:50px 49px;filter:drop-shadow(0 0 4px rgba(240,215,140,0.8));}
+  @keyframes krvBlink{0%,88%,100%{ry:8.5;} 90%,94%{ry:1.2;}}
+  .krv-tip{animation:krvTipGlow 2.2s ease-in-out infinite;}
+  @keyframes krvTipGlow{0%,100%{opacity:0.6;}50%{opacity:1;filter:drop-shadow(0 0 4px rgba(240,215,140,0.9));}}
+  .krv-arm-l{animation:krvArmL 3.4s ease-in-out infinite;transform-origin:16px 55px;}
+  .krv-arm-r{animation:krvArmR 3.4s ease-in-out infinite;transform-origin:84px 55px;}
+  @keyframes krvArmL{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-6deg);}}
+  @keyframes krvArmR{0%,100%{transform:rotate(0deg);}50%{transform:rotate(6deg);}}
+
+  .bot-panel{
+    width:340px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+    background:var(--carbon-1);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 24px 60px -12px rgba(0,0,0,0.7);
+    display:flex;flex-direction:column;
+    transform:translateY(12px) scale(0.98);
+    transition:max-height .35s ease, opacity .3s ease, transform .3s ease;
+  }
+  .bot-panel.open{max-height:520px;opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+
+  .bot-panel-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:16px 16px;border-bottom:1px solid var(--line);
+    background:linear-gradient(120deg, var(--carbon-2), var(--carbon-1));
+  }
+  .bot-head-id{display:flex;align-items:center;gap:10px;}
+  .bot-mini-avatar{
+    width:40px;height:40px;border-radius:50%;background:var(--carbon-2);
+    border:1px solid rgba(201,162,75,0.4);display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .bot-mini-avatar svg{width:30px;height:30px;}
+  .bot-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+  .bot-status{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:500;color:var(--text-low);display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;}
+  .bot-dot{width:6px;height:6px;border-radius:50%;background:var(--wa);box-shadow:0 0 6px 1px rgba(37,211,102,0.7);}
+  .bot-role{font-size:11px;color:var(--text-low);margin-top:2px;}
+  .bot-close{background:none;border:none;color:var(--text-mid);cursor:pointer;padding:6px;border-radius:6px;transition:color .2s, background .2s;}
+  .bot-close:hover{color:var(--text-hi);background:rgba(255,255,255,0.05);}
+  .bot-close svg{width:18px;height:18px;display:block;}
+
+  .bot-messages{padding:16px;display:flex;flex-direction:column;gap:10px;max-height:230px;overflow-y:auto;}
+  .bot-msg{
+    font-size:13px;line-height:1.55;padding:10px 13px;border-radius:10px;max-width:88%;
+    animation:botMsgIn .3s ease;
+  }
+  @keyframes botMsgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .bot-msg-in{background:var(--carbon-2);color:var(--text-hi);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px;}
+  .bot-msg-out{background:linear-gradient(120deg,var(--gold-1),var(--gold-2));color:var(--carbon-0);align-self:flex-end;border-bottom-right-radius:3px;font-weight:500;}
+  .bot-msg-in strong{color:var(--gold-2);}
+  .bot-msg a{color:var(--wa);font-weight:600;}
+
+  .bot-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px;}
+  .bot-chip{
+    font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.02em;
+    background:var(--carbon-2);border:1px solid var(--line);color:var(--silver-2);
+    padding:7px 11px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s;
+  }
+  .bot-chip:hover{border-color:var(--gold-2);color:var(--gold-3);}
+
+  .bot-input-row{display:flex;gap:8px;padding:12px 14px 14px;border-top:1px solid var(--line);}
+  .bot-input-row input{
+    flex:1;background:var(--carbon-2);border:1px solid var(--line);color:var(--text-hi);
+    padding:10px 12px;border-radius:20px;font-family:'Inter',sans-serif;font-size:13px;outline:none;
+    transition:border-color .2s;
+  }
+  .bot-input-row input:focus{border-color:var(--gold-2);}
+  .bot-send{
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;border:none;cursor:pointer;
+    background:linear-gradient(120deg,var(--gold-1),var(--gold-3));color:var(--carbon-0);
+    display:flex;align-items:center;justify-content:center;transition:transform .2s;
+  }
+  .bot-send:hover{transform:scale(1.06);}
+  .bot-send svg{width:17px;height:17px;}
+
+  @media (max-width:600px){
+    .bot-widget{right:14px;bottom:86px;}
+    .bot-panel{width:calc(100vw - 28px);max-width:360px;}
+    .bot-float{width:56px;height:56px;}
+    .bot-float-svg{width:38px;height:38px;}
+  }
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+
+  @media (max-width:980px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .hero .container{grid-template-columns:1fr;}
+    .hero-visual{order:-1;max-width:340px;margin:0 auto 20px;}
+    .modules{grid-template-columns:1fr;}
+    .catalog-grid{grid-template-columns:repeat(2,1fr);}
+    .value-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .cta-band .container{flex-direction:column;align-items:flex-start;}
+    .float-tag{display:none;}
+  }
+  @media (max-width:600px){
+    .container{padding:0 22px;}
+    nav{padding:14px 22px;}
+    .hero{padding:150px 0 80px;}
+    .hero-stats{gap:24px;flex-wrap:wrap;}
+    .footer-grid{grid-template-columns:1fr;gap:40px;}
+    .module{padding:34px 26px;}
+    .catalog-grid{grid-template-columns:1fr;}
+    .wa-float{width:52px;height:52px;bottom:18px;right:18px;}
+    .wa-float svg{width:26px;height:26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="circuit-bg"></div>
+<svg class="circuit-svg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="circuit" width="140" height="140" patternUnits="userSpaceOnUse">
+      <path d="M0 20 H50 V60 H90" fill="none" stroke="#c9a24b" stroke-width="1"/>
+      <circle cx="90" cy="60" r="3" fill="none" stroke="#c9a24b" stroke-width="1"/>
+      <path d="M140 100 H100 V130" fill="none" stroke="#8b93a1" stroke-width="1"/>
+      <circle cx="100" cy="130" r="2.4" fill="none" stroke="#8b93a1" stroke-width="1"/>
+      <path d="M20 140 V90 H60" fill="none" stroke="#8b93a1" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#circuit)"/>
+</svg>
+
+<canvas class="tech-canvas" id="techCanvas" aria-hidden="true"></canvas>
+<div class="scan-line" aria-hidden="true"></div>
+
+<a class="wa-float" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp con KRIVON">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.1 1.2-4.4-.3-.4A9.7 9.7 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.4-.1-.6.1-.7 1-.9 1.1-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+</a>
+
+<!-- Asistente virtual KRIVON: mascota robot original + chatbot guiado -->
+<div class="bot-widget">
+  <div class="bot-panel" id="botPanel" role="dialog" aria-label="Asistente virtual KRIVON" aria-hidden="true">
+    <div class="bot-panel-head">
+      <div class="bot-head-id">
+        <div class="bot-mini-avatar">
+          <svg viewBox="0 0 100 100"><use href="#krv-bot"></use></svg>
+        </div>
+        <div>
+          <div class="bot-name">KRV <span class="bot-status"><span class="bot-dot"></span>En línea</span></div>
+          <div class="bot-role">Asistente virtual KRIVON</div>
+        </div>
+      </div>
+      <button class="bot-close" id="botClose" aria-label="Cerrar chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="bot-messages" id="botMessages">
+      <div class="bot-msg bot-msg-in">Hola, soy <strong>KRV</strong>, el asistente de ingeniería de KRIVON. ¿En qué puedo orientarte hoy?</div>
+    </div>
+    <div class="bot-quick" id="botQuick">
+      <button class="bot-chip" data-q="servicios">Servicios</button>
+      <button class="bot-chip" data-q="cotizar">Cotizar equipo</button>
+      <button class="bot-chip" data-q="soporte">Soporte técnico</button>
+      <button class="bot-chip" data-q="horario">Horario</button>
+    </div>
+    <form class="bot-input-row" id="botForm">
+      <input type="text" id="botInput" placeholder="Escribe tu consulta..." autocomplete="off">
+      <button type="submit" class="bot-send" aria-label="Enviar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7-7-3Z"/></svg>
+      </button>
+    </form>
+  </div>
+
+  <button class="bot-float" id="botToggle" aria-label="Abrir asistente virtual KRV" aria-expanded="false">
+    <span class="bot-float-glow"></span>
+    <svg class="bot-float-svg" viewBox="0 0 100 100"><use href="#krv-bot"></use></svg>
+    <span class="bot-ping"></span>
+  </button>
+</div>
+
+<!-- Definición reutilizable de la mascota robot original "KRV" (no representa personajes de terceros) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="krv-bot">
+      <ellipse cx="50" cy="86" rx="19" ry="4" fill="#000" opacity="0.35"/>
+      <rect x="34" y="20" width="6" height="14" rx="3" fill="var(--bot-body-2)" stroke="var(--gold-2)" stroke-width="1"/>
+      <rect x="60" y="20" width="6" height="14" rx="3" fill="var(--bot-body-2)" stroke="var(--gold-2)" stroke-width="1"/>
+      <circle cx="37" cy="20" r="3.4" fill="var(--gold-3)" class="krv-tip"/>
+      <circle cx="63" cy="20" r="3.4" fill="var(--gold-3)" class="krv-tip"/>
+      <rect x="22" y="30" width="56" height="42" rx="14" fill="url(#krvBodyGrad)" stroke="var(--gold-2)" stroke-width="1.4"/>
+      <rect x="30" y="38" width="40" height="22" rx="10" fill="#0a0c10" stroke="var(--line)" stroke-width="1"/>
+      <circle cx="50" cy="49" r="8.5" fill="var(--bot-eye)" class="krv-eye"/>
+      <circle cx="50" cy="49" r="8.5" fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="1"/>
+      <rect x="34" y="66" width="10" height="3" rx="1.5" fill="var(--silver-2)" opacity="0.7"/>
+      <rect x="56" y="66" width="10" height="3" rx="1.5" fill="var(--silver-2)" opacity="0.7"/>
+      <path d="M16 46c-6 3-6 15 0 18" fill="none" stroke="var(--gold-2)" stroke-width="4" stroke-linecap="round" class="krv-arm-l"/>
+      <path d="M84 46c6 3 6 15 0 18" fill="none" stroke="var(--gold-2)" stroke-width="4" stroke-linecap="round" class="krv-arm-r"/>
+      <rect x="30" y="76" width="16" height="9" rx="3" fill="var(--bot-body-2)" stroke="var(--line)" stroke-width="1"/>
+      <rect x="54" y="76" width="16" height="9" rx="3" fill="var(--bot-body-2)" stroke="var(--line)" stroke-width="1"/>
+      <defs>
+        <linearGradient id="krvBodyGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--bot-body-1)"/>
+          <stop offset="1" stop-color="var(--bot-body-2)"/>
+        </linearGradient>
+      </defs>
+    </g>
+  </defs>
+</svg>
+
+<header>
+  <nav>
+    <div class="brand">
+      <img src="assets/krivon-shield-square.png" alt="Escudo KRIVON">
+      <span class="brand-word gold-text">KRIVON</span>
+    </div>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#soluciones">Soluciones</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#conectamos">Nos Conectamos</a>
+      <a href="#casos">Casos de Éxito</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta-wrap">
+      <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa btn-nav-cta">
+        <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.1 1.2-4.4-.3-.4A9.7 9.7 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#contacto" class="btn btn-primary btn-nav-cta">Agendar Diagnóstico</a>
+    </div>
+    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-copy reveal in">
+        <div class="eyebrow">Ingeniería · Innovación · Soluciones Tecnológicas</div>
+        <h1 style="margin-top:18px;">Infraestructura Tecnológica, <span class="gold-text">Ciberseguridad</span> y Escalabilidad Total</h1>
+        <p class="sub">Optimizamos, protegemos y modernizamos los ecosistemas digitales de empresas y profesionales con estándares de ingeniería de vanguardia.</p>
+        <div class="hero-ctas">
+          <a href="#contacto" class="btn btn-primary">Solicitar Solución Empresarial</a>
+          <a href="#catalogo" class="btn btn-outline">Ver Catálogo de Servicios</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="num silver-text">24/7</span><span class="lbl">Helpdesk B2B</span></div>
+          <div><span class="num silver-text">0</span><span class="lbl">Interrupciones objetivo</span></div>
+          <div><span class="num silver-text">100%</span><span class="lbl">Licenciamiento oficial</span></div>
+        </div>
+        <div class="hero-chips">
+          <a href="#catalogo" class="chip"><span class="dot"></span>Laptops</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>PC Escritorio</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Monitores</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Teclados & Mouse</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Memorias RAM</a>
+          <a href="#catalogo" class="chip"><span class="dot"></span>Redes</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal in">
+        <div class="shield-stage">
+          <div class="stage-glow"></div>
+          <div class="stage-ring"></div>
+          <div class="stage-ring r2"></div>
+          <div class="stage-ring r3"></div>
+          <img class="shield-img" src="assets/krivon-shield-square.png" alt="Escudo metálico KRIVON sobre circuito">
+          <div class="float-tag t1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z"/></svg>Firewall activo</div>
+          <div class="float-tag t2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/></svg>Backup en la nube</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="solutions" id="soluciones">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Arquitectura de Soluciones</div>
+        <h2>Cuatro módulos, <span class="silver-text">un solo ecosistema</span></h2>
+        <p>Cada módulo se diseña e implementa como parte de una arquitectura integral: red, seguridad, software y soporte trabajando bajo un mismo estándar de ingeniería.</p>
+      </div>
+    </div>
+
+    <div class="modules reveal">
+      <div class="module">
+        <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z"/><path d="M8 12h8M12 8v8"/></svg></div>
+        <span class="module-tag">MÓDULO 01</span>
+        <h3>Infraestructura y Redes de Alta Disponibilidad</h3>
+        <ul>
+          <li>Diseño e implementación de redes estructuradas, Wi-Fi empresarial y conectividad satelital.</li>
+          <li>Montaje, virtualización y mantenimiento de servidores (On-Premise e Híbridos).</li>
+        </ul>
+      </div>
+      <div class="module">
+        <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5.2 3.4 9.3 8 11 4.6-1.7 8-5.8 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <span class="module-tag">MÓDULO 02</span>
+        <h3>Ciberseguridad & Protección de Datos Críticos</h3>
+        <ul>
+          <li>Auditorías de seguridad, protección contra Malware/Ransomware y firewalls avanzados.</li>
+          <li>Sistemas de respaldo automatizado: Backup en la Nube y Recuperación ante Desastres (DRaaS).</li>
+        </ul>
+      </div>
+      <div class="module">
+        <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <span class="module-tag">MÓDULO 03</span>
+        <h3>Licenciamiento Oficial & Software Corporativo</h3>
+        <ul>
+          <li>Venta, gestión y migración de licencias originales (Windows 11 Pro, Microsoft 365, Office).</li>
+          <li>Implementación de herramientas de productividad y software especializado a medida.</li>
+        </ul>
+      </div>
+      <div class="module">
+        <div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.4M12 18.6V21M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M3 12h2.4M18.6 12H21M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg></div>
+        <span class="module-tag">MÓDULO 04</span>
+        <h3>Soporte Técnico Especializado & Mantenimiento Proactivo</h3>
+        <ul>
+          <li>Mesa de ayuda B2B (Helpdesk 24/7) y soporte presencial/remoto de alta prioridad.</li>
+          <li>Mantenimiento preventivo, optimización crítica y ensamble de equipos de alto rendimiento (Gamer/Diseño/Workstations).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog" id="catalogo">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="eyebrow">Catálogo KRIVON</div>
+        <h2>Equipos & <span class="gold-text">Accesorios Tecnológicos</span></h2>
+        <p>Todo lo que tu empresa o equipo necesita, con garantía y licenciamiento 100% original. Cotiza cualquier categoría directo por WhatsApp.</p>
+      </div>
+
+      <div class="catalog-grid reveal">
+
+        <div class="product-card">
+          <span class="p-badge">STOCK</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M2 19h20M9 16v3M15 16v3"/></svg></div>
+          <h3>Laptops Empresariales & Gamer</h3>
+          <div class="p-items">Ultrabooks corporativos · Estaciones móviles de diseño · Gama gamer alto rendimiento</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">A MEDIDA</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="9" height="18" rx="1.2"/><circle cx="8.5" cy="17.5" r="1"/><path d="M17 6h3M17 9h3M17 12h3"/></svg></div>
+          <h3>Equipos de Escritorio (Desktop)</h3>
+          <div class="p-items">PC Oficina y Productividad · Workstations de Diseño · Torres Gamer a medida</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">HD / 4K</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="1.2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>Monitores & Pantallas Profesionales</h3>
+          <div class="p-items">Paneles Full HD / 2K / 4K · Alta tasa de refresco · Multi-monitor para oficina</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">ERGONÓMICO</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="1.5"/><path d="M6 11v2M10 11v2M14 11v2M18 11v2"/></svg></div>
+          <h3>Teclados, Mouse & Periféricos</h3>
+          <div class="p-items">Mecánicos y de membrana · Ergonómicos oficina · Gamer alta precisión</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">ALTO RENDIMIENTO</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="1.5"/><path d="M9 3v18M15 3v18M6 8h3M6 13h3"/></svg></div>
+          <h3>Memorias RAM & Almacenamiento</h3>
+          <div class="p-items">RAM DDR4 / DDR5 · SSD NVMe & SATA · Discos duros HDD alta capacidad</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">UPGRADE</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v2M15 3v2M9 19v2M15 19v2M3 9h2M3 15h2M19 9h2M19 15h2"/></svg></div>
+          <h3>Componentes & Tarjetas de Video</h3>
+          <div class="p-items">Procesadores Intel/AMD · Tarjetas gráficas GPU · Fuentes de poder certificadas</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">EMPRESARIAL</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M4 19c0-4.4 3.6-8 8-8s8 3.6 8 8"/><path d="M12 13v-2"/></svg></div>
+          <h3>Redes & Conectividad</h3>
+          <div class="p-items">Routers y Switches administrables · Access Points Wi-Fi 6 · Cableado estructurado</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+        <div class="product-card">
+          <span class="p-badge">OFICINA</span>
+          <div class="p-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="11" rx="1.5"/><path d="M9 21h6M8 6V4h8v2"/></svg></div>
+          <h3>Accesorios & Ergonomía</h3>
+          <div class="p-items">Bases y hubs USB-C · Webcams y audífonos · Soportes ergonómicos ajustables</div>
+          <a class="p-quote" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>Cotizar por WhatsApp</a>
+        </div>
+
+      </div>
+
+      <div class="catalog-note reveal">
+        <p><strong>¿No encuentras lo que buscas?</strong> Manejamos catálogo ampliado con proveedores certificados. Cuéntanos tu proyecto y armamos una cotización a medida en menos de 24h.</p>
+        <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Hablar con un Ingeniero
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="conectamos">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">¿Por qué KRIVON?</div>
+        <h2>Valor diferencial <span class="gold-text">construido en ingeniería</span></h2>
+      </div>
+      <div class="value-grid reveal">
+        <div class="value-card">
+          <span class="vnum">CONTINUIDAD</span>
+          <h3>Continuidad Operativa</h3>
+          <p>Respuesta en tiempos récord para garantizar cero interrupciones en la operación de tu negocio.</p>
+          <div class="vline"></div>
+        </div>
+        <div class="value-card">
+          <span class="vnum">A MEDIDA</span>
+          <h3>Arquitectura a Medida</h3>
+          <p>Soluciones adaptadas al tamaño, la industria y la proyección de crecimiento de cada cliente.</p>
+          <div class="vline"></div>
+        </div>
+        <div class="value-card">
+          <span class="vnum">GARANTÍA</span>
+          <h3>Garantía de Ingeniería</h3>
+          <p>Procesos respaldados por estándares de calidad técnica internacional en cada implementación.</p>
+          <div class="vline"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="casos">
+    <div class="container">
+      <div>
+        <div class="eyebrow">Portafolio & Casos de Éxito</div>
+        <h2>Diagnosticamos tu ecosistema digital <span class="silver-text">antes de intervenirlo</span></h2>
+      </div>
+      <div class="cta-actions">
+        <a href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" class="btn btn-wa">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <a href="#contacto" class="btn btn-primary">Agendar Diagnóstico Corporativo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contacto">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <img src="assets/krivon-shield-square.png" alt="Escudo KRIVON" style="height:42px;width:42px;object-fit:cover;border-radius:50%;border:1.5px solid rgba(201,162,75,0.5);">
+          <span class="brand-word gold-text">KRIVON</span>
+        </div>
+        <p>Ingeniería e innovación completa. Tu aliado tecnológico total en infraestructura, ciberseguridad, licenciamiento, catálogo de equipos y soporte especializado.</p>
+        <a class="footer-wa" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3z"/></svg>
+          Chatea con nosotros
+        </a>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="#inicio">Inicio</a>
+        <a href="#soluciones">Soluciones</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#casos">Casos de Éxito</a>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contacto Directo</h4>
+        <div><strong>Tel:</strong> 312 345 6372</div>
+        <div><strong>Correo:</strong> krivont@gmail.com</div>
+        <div><strong>Web:</strong> www.krivon.co</div>
+      </div>
+      <div class="footer-col">
+        <h4>Habla con un Ingeniero</h4>
+        <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Solicitud enviada ✓';">
+          <input type="text" placeholder="Nombre" required>
+          <input type="email" placeholder="Correo corporativo" required>
+          <textarea placeholder="Cuéntanos qué necesitas"></textarea>
+          <button type="submit" class="btn btn-primary">Hablar con un Ingeniero</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 KRIVON. Todos los derechos reservados.</span>
+      <div class="fb-links">
+        <a href="#">Aviso de Privacidad</a>
+        <a href="#">Términos de Servicio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const stage = document.querySelector('.shield-stage');
+  if(stage){
+    const dots = 3;
+    for(let i=0;i<dots;i++){
+      const d = document.createElement('div');
+      d.className='orbit-dot';
+      stage.appendChild(d);
+      let angle = (360/dots)*i;
+      const speed = 0.15 + i*0.05;
+      function animate(){
+        angle += speed;
+        const rad = angle * Math.PI/180;
+        const box = stage.getBoundingClientRect();
+        const R = box.width * (0.46 - i*0.03);
+        const x = box.width/2 + R*Math.cos(rad) - 3;
+        const y = box.height/2 + R*Math.sin(rad) - 3;
+        d.style.left = x+'px';
+        d.style.top = y+'px';
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  }
+
+  /* ===== Fondo animado: trazas de circuito con pulsos de energía viajando ===== */
+  (function(){
+    const canvas = document.getElementById('techCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const GOLD = '201,162,75';
+    const GOLD_BRIGHT = '240,215,140';
+    const SILVER = '168,175,186';
+
+    let W, H, dpr, paths = [], staticLayer = null, staticCtx = null;
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    // Genera una traza tipo PCB: pasos ortogonales en cuadrícula, con giros ocasionales
+    function buildTrace(step){
+      const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+      let dir = pick(dirs);
+      let x = Math.round(rand(0, W)/step)*step;
+      let y = Math.round(rand(0, H)/step)*step;
+      const pts = [{x,y}];
+      const segments = Math.floor(rand(5,11));
+      for(let s=0; s<segments; s++){
+        if(Math.random() < 0.4){
+          const perp = (dir[0] !== 0) ? [[0,1],[0,-1]] : [[1,0],[-1,0]];
+          dir = pick(perp);
+        }
+        const len = Math.floor(rand(1,4)) * step;
+        let nx = x + dir[0]*len;
+        let ny = y + dir[1]*len;
+        nx = Math.min(Math.max(nx, -step), W+step);
+        ny = Math.min(Math.max(ny, -step), H+step);
+        pts.push({x:nx,y:ny});
+        x = nx; y = ny;
+      }
+      return pts;
+    }
+
+    function pathLengths(pts){
+      let total = 0;
+      const dists = [0];
+      for(let i=1;i<pts.length;i++){
+        total += Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y);
+        dists.push(total);
+      }
+      return {pts, dists, total};
+    }
+
+    function pointAtDistance(trace, d){
+      const {pts, dists, total} = trace;
+      if(d <= 0) return {x:pts[0].x, y:pts[0].y, angle:0};
+      if(d >= total) d = total - 0.001;
+      for(let i=1;i<dists.length;i++){
+        if(d <= dists[i]){
+          const segLen = dists[i]-dists[i-1];
+          const t = segLen === 0 ? 0 : (d-dists[i-1])/segLen;
+          const a = pts[i-1], b = pts[i];
+          return {
+            x: a.x + (b.x-a.x)*t,
+            y: a.y + (b.y-a.y)*t,
+            angle: Math.atan2(b.y-a.y, b.x-a.x)
+          };
+        }
+      }
+      return {x:pts[pts.length-1].x, y:pts[pts.length-1].y, angle:0};
+    }
+
+    function buildStaticLayer(){
+      staticLayer = document.createElement('canvas');
+      staticLayer.width = W; staticLayer.height = H;
+      staticCtx = staticLayer.getContext('2d');
+      staticCtx.lineJoin = 'round';
+      paths.forEach(tr=>{
+        staticCtx.beginPath();
+        tr.pts.forEach((p,i)=> i===0 ? staticCtx.moveTo(p.x,p.y) : staticCtx.lineTo(p.x,p.y));
+        staticCtx.strokeStyle = `rgba(${tr.tone},0.16)`;
+        staticCtx.lineWidth = 1;
+        staticCtx.stroke();
+        tr.pts.forEach((p,i)=>{
+          if(i===0 || i===tr.pts.length-1) return;
+          staticCtx.beginPath();
+          staticCtx.arc(p.x,p.y,1.8,0,Math.PI*2);
+          staticCtx.fillStyle = `rgba(${tr.tone},0.35)`;
+          staticCtx.fill();
+        });
+        // Punto terminal tipo "pad" de circuito
+        const end = tr.pts[tr.pts.length-1];
+        staticCtx.beginPath();
+        staticCtx.arc(end.x,end.y,3,0,Math.PI*2);
+        staticCtx.strokeStyle = `rgba(${tr.tone},0.3)`;
+        staticCtx.lineWidth = 1;
+        staticCtx.stroke();
+      });
+    }
+
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+
+      const step = W < 700 ? 34 : 46;
+      const count = Math.min(34, Math.max(14, Math.floor((W*H)/60000)));
+      paths = Array.from({length:count}, ()=>{
+        const trace = pathLengths(buildTrace(step));
+        return {
+          ...trace,
+          tone: Math.random() < 0.72 ? GOLD : SILVER,
+          pulses: Array.from({length: Math.random() < 0.35 ? 2 : 1}, ()=>({
+            d: rand(0, trace.total),
+            speed: rand(38, 78),
+            delay: 0
+          }))
+        };
+      });
+      buildStaticLayer();
+    }
+
+    let last = performance.now();
+    function step(now){
+      const dt = Math.min((now-last)/1000, 0.05);
+      last = now;
+      ctx.clearRect(0,0,W,H);
+      ctx.drawImage(staticLayer,0,0,W,H);
+
+      paths.forEach(tr=>{
+        tr.pulses.forEach(p=>{
+          if(p.delay > 0){ p.delay -= dt; return; }
+          p.d += p.speed*dt;
+          if(p.d > tr.total){
+            p.d = 0;
+            p.delay = rand(0.4, 2.2);
+          }
+          const pos = pointAtDistance(tr, p.d);
+          const tailPos = pointAtDistance(tr, Math.max(0, p.d - 34));
+
+          const grad = ctx.createLinearGradient(tailPos.x, tailPos.y, pos.x, pos.y);
+          grad.addColorStop(0, `rgba(${tr.tone},0)`);
+          grad.addColorStop(1, `rgba(${GOLD_BRIGHT},0.9)`);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(tailPos.x, tailPos.y);
+          ctx.lineTo(pos.x, pos.y);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${GOLD_BRIGHT},0.95)`;
+          ctx.shadowColor = `rgba(${GOLD_BRIGHT},0.9)`;
+          ctx.shadowBlur = 8;
+          ctx.arc(pos.x, pos.y, 2.1, 0, Math.PI*2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      });
+
+      if(!reduceMotion) requestAnimationFrame(step);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    if(reduceMotion){
+      ctx.drawImage(staticLayer,0,0,W,H);
+    } else {
+      requestAnimationFrame(step);
+    }
+  })();
+
+  /* ===== Asistente virtual KRV: apertura del panel y respuestas guiadas ===== */
+  (function(){
+    const toggle = document.getElementById('botToggle');
+    const panel = document.getElementById('botPanel');
+    const closeBtn = document.getElementById('botClose');
+    const messages = document.getElementById('botMessages');
+    const form = document.getElementById('botForm');
+    const input = document.getElementById('botInput');
+    const quickChips = document.querySelectorAll('.bot-chip');
+    if(!toggle || !panel) return;
+
+    const WA_LINK = 'https://wa.me/message/NOT4V32PJY5PK1';
+
+    const replies = {
+      servicios: `Trabajamos en 4 módulos: <strong>Redes e Infraestructura</strong>, <strong>Ciberseguridad</strong>, <strong>Licenciamiento & Software</strong> y <strong>Soporte Técnico 24/7</strong>. ¿Sobre cuál te gustaría más detalle?`,
+      cotizar: `Con gusto. Para armar tu cotización necesito saber qué equipo o servicio buscas. Puedes escribirlo aquí o directo con un ingeniero por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a>.`,
+      soporte: `Nuestro Helpdesk B2B atiende 24/7. Para soporte inmediato lo más rápido es escribir por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a> y un ingeniero te atiende directo.`,
+      horario: `Nuestro equipo de soporte técnico está disponible 24/7. El área comercial y de proyectos atiende en horario hábil, pero puedes dejar tu mensaje por WhatsApp en cualquier momento.`,
+      redes: `Diseñamos redes estructuradas, Wi-Fi empresarial, conectividad satelital y montaje/virtualización de servidores On-Premise e híbridos.`,
+      ciberseguridad: `Hacemos auditorías de seguridad, protección contra malware/ransomware, firewalls avanzados, backup en la nube y recuperación ante desastres (DRaaS).`,
+      licencia: `Vendemos y gestionamos licenciamiento 100% oficial: Windows 11 Pro, Microsoft 365, Office y software corporativo a medida.`,
+      laptop: `Tenemos laptops empresariales, ultrabooks corporativos, estaciones móviles de diseño y equipos gamer de alto rendimiento.`,
+      precio: `Los precios varían según el equipo o servicio y el volumen. Cuéntame qué necesitas y te paso el detalle, o cotiza directo con un ingeniero por WhatsApp.`,
+      contacto: `Puedes escribirnos al ${'3123456372'.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3')}, al correo krivont@gmail.com o por WhatsApp cuando gustes.`,
+      gracias: `¡Con gusto! Si necesitas algo más, aquí estaré.`,
+      default: `Puedo orientarte sobre redes, ciberseguridad, licenciamiento y soporte técnico. Para cotizaciones o dudas puntuales, lo más ágil es hablar directo con un ingeniero por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a>.`
+    };
+
+    function addMessage(text, outgoing){
+      const div = document.createElement('div');
+      div.className = 'bot-msg ' + (outgoing ? 'bot-msg-out' : 'bot-msg-in');
+      div.innerHTML = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function matchReply(text){
+      const t = text.toLowerCase();
+      if(/(cotiz|precio|costo|vale|cuanto)/.test(t)) return replies.precio;
+      if(/(red|wifi|internet|cableado|servidor)/.test(t)) return replies.redes;
+      if(/(seguridad|virus|ransom|hackeo|firewall|respaldo|backup)/.test(t)) return replies.ciberseguridad;
+      if(/(licencia|windows|office|365|software)/.test(t)) return replies.licencia;
+      if(/(laptop|portatil|pc|computador|equipo)/.test(t)) return replies.laptop;
+      if(/(soporte|ayuda|falla|problema|no funciona)/.test(t)) return replies.soporte;
+      if(/(horario|hora|abierto|atienden)/.test(t)) return replies.horario;
+      if(/(contacto|telefono|correo|whatsapp|numero)/.test(t)) return replies.contacto;
+      if(/(gracias|genial|perfecto)/.test(t)) return replies.gracias;
+      if(/(servicio|ofrecen|hacen)/.test(t)) return replies.servicios;
+      return replies.default;
+    }
+
+    function openPanel(){
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      toggle.setAttribute('aria-expanded','true');
+      setTimeout(()=>input && input.focus(), 200);
+    }
+    function closePanel(){
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+      toggle.setAttribute('aria-expanded','false');
+    }
+
+    toggle.addEventListener('click', ()=>{
+      panel.classList.contains('open') ? closePanel() : openPanel();
+    });
+    closeBtn.addEventListener('click', closePanel);
+
+    quickChips.forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        const key = chip.getAttribute('data-q');
+        addMessage(chip.textContent, true);
+        setTimeout(()=> addMessage(replies[key] || replies.default, false), 380);
+      });
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const val = input.value.trim();
+      if(!val) return;
+      addMessage(val, true);
+      input.value = '';
+      setTimeout(()=> addMessage(matchReply(val), false), 420);
+    });
+  })();
+
+  const burger = document.querySelector('.burger');
+  const navLinks = document.querySelector('.nav-links');
+  burger.addEventListener('click', ()=>{
+    const open = navLinks.classList.toggle('mobile-open');
+    if(open){
+      navLinks.style.display='flex';
+      navLinks.style.position='fixed';
+      navLinks.style.top='68px';
+      navLinks.style.left='0';
+      navLinks.style.right='0';
+      navLinks.style.background='rgba(7,8,10,0.98)';
+      navLinks.style.flexDirection='column';
+      navLinks.style.padding='24px 30px';
+      navLinks.style.borderBottom='1px solid var(--line)';
+      navLinks.style.gap='18px';
+    } else {
+      navLinks.style.display='none';
+    }
+  });
+</script>
+
+</body>
+</html>
