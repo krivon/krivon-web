@@ -24,6 +24,9 @@
     --text-hi:#f3f1ea;
     --text-mid:#9aa0ac;
     --text-low:#5c6470;
+    --bot-eye:#f0d78c;
+    --bot-body-1:#1c2027;
+    --bot-body-2:#272c35;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -43,7 +46,24 @@
       radial-gradient(ellipse 700px 500px at 100% 30%, rgba(26,47,82,0.35), transparent 60%),
       radial-gradient(ellipse 800px 600px at 0% 80%, rgba(201,162,75,0.06), transparent 60%);
   }
-  .circuit-svg{position:fixed;inset:0;z-index:0;opacity:0.16;pointer-events:none;}
+  .circuit-svg{position:fixed;inset:0;z-index:0;opacity:0.10;pointer-events:none;}
+
+  .tech-canvas{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:0.55;
+  }
+  .scan-line{
+    position:fixed;left:0;right:0;height:2px;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(201,162,75,0.55) 20%, rgba(240,215,140,0.85) 50%, rgba(201,162,75,0.55) 80%, transparent);
+    box-shadow:0 0 12px 2px rgba(201,162,75,0.35);
+    animation:scanSweep 9s linear infinite;
+  }
+  @keyframes scanSweep{
+    0%{top:-2px;opacity:0;}
+    5%{opacity:0.7;}
+    95%{opacity:0.7;}
+    100%{top:100%;opacity:0;}
+  }
 
   a{color:inherit;text-decoration:none;}
   .eyebrow{
@@ -377,6 +397,111 @@
     50%{box-shadow:0 10px 34px -4px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.08);}
   }
 
+  /* ===== Asistente virtual KRV (robot original) ===== */
+  .bot-widget{position:fixed;bottom:100px;right:26px;z-index:210;display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+
+  .bot-float{
+    position:relative;width:64px;height:64px;border-radius:50%;border:1px solid rgba(201,162,75,0.5);
+    background:radial-gradient(circle at 32% 28%, var(--carbon-3), var(--carbon-1) 70%);
+    box-shadow:0 10px 30px -6px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,162,75,0.15);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    animation:botFloatBob 3.6s ease-in-out infinite;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .bot-float:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 14px 34px -6px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,75,0.3);}
+  .bot-float-svg{width:44px;height:44px;position:relative;z-index:2;}
+  .bot-float-glow{
+    position:absolute;inset:-6px;border-radius:50%;
+    background:radial-gradient(circle, rgba(201,162,75,0.28), transparent 68%);
+    filter:blur(4px);animation:pulseGlow 4.2s ease-in-out infinite;
+  }
+  .bot-ping{
+    position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;
+    background:var(--wa);box-shadow:0 0 8px 2px rgba(37,211,102,0.7);
+    animation:botPing 2.4s ease-in-out infinite;
+  }
+  @keyframes botFloatBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  @keyframes botPing{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.55;transform:scale(0.85);}}
+
+  .krv-eye{animation:krvBlink 4.5s ease-in-out infinite;transform-origin:50px 49px;filter:drop-shadow(0 0 4px rgba(240,215,140,0.8));}
+  @keyframes krvBlink{0%,88%,100%{ry:8.5;} 90%,94%{ry:1.2;}}
+  .krv-tip{animation:krvTipGlow 2.2s ease-in-out infinite;}
+  @keyframes krvTipGlow{0%,100%{opacity:0.6;}50%{opacity:1;filter:drop-shadow(0 0 4px rgba(240,215,140,0.9));}}
+  .krv-arm-l{animation:krvArmL 3.4s ease-in-out infinite;transform-origin:16px 55px;}
+  .krv-arm-r{animation:krvArmR 3.4s ease-in-out infinite;transform-origin:84px 55px;}
+  @keyframes krvArmL{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-6deg);}}
+  @keyframes krvArmR{0%,100%{transform:rotate(0deg);}50%{transform:rotate(6deg);}}
+
+  .bot-panel{
+    width:340px;max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+    background:var(--carbon-1);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 24px 60px -12px rgba(0,0,0,0.7);
+    display:flex;flex-direction:column;
+    transform:translateY(12px) scale(0.98);
+    transition:max-height .35s ease, opacity .3s ease, transform .3s ease;
+  }
+  .bot-panel.open{max-height:520px;opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+
+  .bot-panel-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:16px 16px;border-bottom:1px solid var(--line);
+    background:linear-gradient(120deg, var(--carbon-2), var(--carbon-1));
+  }
+  .bot-head-id{display:flex;align-items:center;gap:10px;}
+  .bot-mini-avatar{
+    width:40px;height:40px;border-radius:50%;background:var(--carbon-2);
+    border:1px solid rgba(201,162,75,0.4);display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .bot-mini-avatar svg{width:30px;height:30px;}
+  .bot-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.02em;display:flex;align-items:center;gap:8px;}
+  .bot-status{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:500;color:var(--text-low);display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;}
+  .bot-dot{width:6px;height:6px;border-radius:50%;background:var(--wa);box-shadow:0 0 6px 1px rgba(37,211,102,0.7);}
+  .bot-role{font-size:11px;color:var(--text-low);margin-top:2px;}
+  .bot-close{background:none;border:none;color:var(--text-mid);cursor:pointer;padding:6px;border-radius:6px;transition:color .2s, background .2s;}
+  .bot-close:hover{color:var(--text-hi);background:rgba(255,255,255,0.05);}
+  .bot-close svg{width:18px;height:18px;display:block;}
+
+  .bot-messages{padding:16px;display:flex;flex-direction:column;gap:10px;max-height:230px;overflow-y:auto;}
+  .bot-msg{
+    font-size:13px;line-height:1.55;padding:10px 13px;border-radius:10px;max-width:88%;
+    animation:botMsgIn .3s ease;
+  }
+  @keyframes botMsgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .bot-msg-in{background:var(--carbon-2);color:var(--text-hi);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px;}
+  .bot-msg-out{background:linear-gradient(120deg,var(--gold-1),var(--gold-2));color:var(--carbon-0);align-self:flex-end;border-bottom-right-radius:3px;font-weight:500;}
+  .bot-msg-in strong{color:var(--gold-2);}
+  .bot-msg a{color:var(--wa);font-weight:600;}
+
+  .bot-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px;}
+  .bot-chip{
+    font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.02em;
+    background:var(--carbon-2);border:1px solid var(--line);color:var(--silver-2);
+    padding:7px 11px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s;
+  }
+  .bot-chip:hover{border-color:var(--gold-2);color:var(--gold-3);}
+
+  .bot-input-row{display:flex;gap:8px;padding:12px 14px 14px;border-top:1px solid var(--line);}
+  .bot-input-row input{
+    flex:1;background:var(--carbon-2);border:1px solid var(--line);color:var(--text-hi);
+    padding:10px 12px;border-radius:20px;font-family:'Inter',sans-serif;font-size:13px;outline:none;
+    transition:border-color .2s;
+  }
+  .bot-input-row input:focus{border-color:var(--gold-2);}
+  .bot-send{
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;border:none;cursor:pointer;
+    background:linear-gradient(120deg,var(--gold-1),var(--gold-3));color:var(--carbon-0);
+    display:flex;align-items:center;justify-content:center;transition:transform .2s;
+  }
+  .bot-send:hover{transform:scale(1.06);}
+  .bot-send svg{width:17px;height:17px;}
+
+  @media (max-width:600px){
+    .bot-widget{right:14px;bottom:86px;}
+    .bot-panel{width:calc(100vw - 28px);max-width:360px;}
+    .bot-float{width:56px;height:56px;}
+    .bot-float-svg{width:38px;height:38px;}
+  }
+
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
 
@@ -425,9 +550,82 @@
   <rect width="100%" height="100%" fill="url(#circuit)"/>
 </svg>
 
+<canvas class="tech-canvas" id="techCanvas" aria-hidden="true"></canvas>
+<div class="scan-line" aria-hidden="true"></div>
+
 <a class="wa-float" href="https://wa.me/message/NOT4V32PJY5PK1" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp con KRIVON">
   <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.8c1.9 1 4 1.6 6.3 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.1 1.2-4.4-.3-.4A9.7 9.7 0 0 1 6.2 15c0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.4-.1-.6.1-.7 1-.9 1.1-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
 </a>
+
+<!-- Asistente virtual KRIVON: mascota robot original + chatbot guiado -->
+<div class="bot-widget">
+  <div class="bot-panel" id="botPanel" role="dialog" aria-label="Asistente virtual KRIVON" aria-hidden="true">
+    <div class="bot-panel-head">
+      <div class="bot-head-id">
+        <div class="bot-mini-avatar">
+          <svg viewBox="0 0 100 100"><use href="#krv-bot"></use></svg>
+        </div>
+        <div>
+          <div class="bot-name">KRV <span class="bot-status"><span class="bot-dot"></span>En línea</span></div>
+          <div class="bot-role">Asistente virtual KRIVON</div>
+        </div>
+      </div>
+      <button class="bot-close" id="botClose" aria-label="Cerrar chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="bot-messages" id="botMessages">
+      <div class="bot-msg bot-msg-in">Hola, soy <strong>KRV</strong>, el asistente de ingeniería de KRIVON. ¿En qué puedo orientarte hoy?</div>
+    </div>
+    <div class="bot-quick" id="botQuick">
+      <button class="bot-chip" data-q="servicios">Servicios</button>
+      <button class="bot-chip" data-q="cotizar">Cotizar equipo</button>
+      <button class="bot-chip" data-q="soporte">Soporte técnico</button>
+      <button class="bot-chip" data-q="horario">Horario</button>
+    </div>
+    <form class="bot-input-row" id="botForm">
+      <input type="text" id="botInput" placeholder="Escribe tu consulta..." autocomplete="off">
+      <button type="submit" class="bot-send" aria-label="Enviar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7-7-3Z"/></svg>
+      </button>
+    </form>
+  </div>
+
+  <button class="bot-float" id="botToggle" aria-label="Abrir asistente virtual KRV" aria-expanded="false">
+    <span class="bot-float-glow"></span>
+    <svg class="bot-float-svg" viewBox="0 0 100 100"><use href="#krv-bot"></use></svg>
+    <span class="bot-ping"></span>
+  </button>
+</div>
+
+<!-- Definición reutilizable de la mascota robot original "KRV" (no representa personajes de terceros) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="krv-bot">
+      <ellipse cx="50" cy="86" rx="19" ry="4" fill="#000" opacity="0.35"/>
+      <rect x="34" y="20" width="6" height="14" rx="3" fill="var(--bot-body-2)" stroke="var(--gold-2)" stroke-width="1"/>
+      <rect x="60" y="20" width="6" height="14" rx="3" fill="var(--bot-body-2)" stroke="var(--gold-2)" stroke-width="1"/>
+      <circle cx="37" cy="20" r="3.4" fill="var(--gold-3)" class="krv-tip"/>
+      <circle cx="63" cy="20" r="3.4" fill="var(--gold-3)" class="krv-tip"/>
+      <rect x="22" y="30" width="56" height="42" rx="14" fill="url(#krvBodyGrad)" stroke="var(--gold-2)" stroke-width="1.4"/>
+      <rect x="30" y="38" width="40" height="22" rx="10" fill="#0a0c10" stroke="var(--line)" stroke-width="1"/>
+      <circle cx="50" cy="49" r="8.5" fill="var(--bot-eye)" class="krv-eye"/>
+      <circle cx="50" cy="49" r="8.5" fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="1"/>
+      <rect x="34" y="66" width="10" height="3" rx="1.5" fill="var(--silver-2)" opacity="0.7"/>
+      <rect x="56" y="66" width="10" height="3" rx="1.5" fill="var(--silver-2)" opacity="0.7"/>
+      <path d="M16 46c-6 3-6 15 0 18" fill="none" stroke="var(--gold-2)" stroke-width="4" stroke-linecap="round" class="krv-arm-l"/>
+      <path d="M84 46c6 3 6 15 0 18" fill="none" stroke="var(--gold-2)" stroke-width="4" stroke-linecap="round" class="krv-arm-r"/>
+      <rect x="30" y="76" width="16" height="9" rx="3" fill="var(--bot-body-2)" stroke="var(--line)" stroke-width="1"/>
+      <rect x="54" y="76" width="16" height="9" rx="3" fill="var(--bot-body-2)" stroke="var(--line)" stroke-width="1"/>
+      <defs>
+        <linearGradient id="krvBodyGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--bot-body-1)"/>
+          <stop offset="1" stop-color="var(--bot-body-2)"/>
+        </linearGradient>
+      </defs>
+    </g>
+  </defs>
+</svg>
 
 <header>
   <nav>
@@ -752,6 +950,263 @@
       animate();
     }
   }
+
+  /* ===== Fondo animado: trazas de circuito con pulsos de energía viajando ===== */
+  (function(){
+    const canvas = document.getElementById('techCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const GOLD = '201,162,75';
+    const GOLD_BRIGHT = '240,215,140';
+    const SILVER = '168,175,186';
+
+    let W, H, dpr, paths = [], staticLayer = null, staticCtx = null;
+
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    // Genera una traza tipo PCB: pasos ortogonales en cuadrícula, con giros ocasionales
+    function buildTrace(step){
+      const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+      let dir = pick(dirs);
+      let x = Math.round(rand(0, W)/step)*step;
+      let y = Math.round(rand(0, H)/step)*step;
+      const pts = [{x,y}];
+      const segments = Math.floor(rand(5,11));
+      for(let s=0; s<segments; s++){
+        if(Math.random() < 0.4){
+          const perp = (dir[0] !== 0) ? [[0,1],[0,-1]] : [[1,0],[-1,0]];
+          dir = pick(perp);
+        }
+        const len = Math.floor(rand(1,4)) * step;
+        let nx = x + dir[0]*len;
+        let ny = y + dir[1]*len;
+        nx = Math.min(Math.max(nx, -step), W+step);
+        ny = Math.min(Math.max(ny, -step), H+step);
+        pts.push({x:nx,y:ny});
+        x = nx; y = ny;
+      }
+      return pts;
+    }
+
+    function pathLengths(pts){
+      let total = 0;
+      const dists = [0];
+      for(let i=1;i<pts.length;i++){
+        total += Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y);
+        dists.push(total);
+      }
+      return {pts, dists, total};
+    }
+
+    function pointAtDistance(trace, d){
+      const {pts, dists, total} = trace;
+      if(d <= 0) return {x:pts[0].x, y:pts[0].y, angle:0};
+      if(d >= total) d = total - 0.001;
+      for(let i=1;i<dists.length;i++){
+        if(d <= dists[i]){
+          const segLen = dists[i]-dists[i-1];
+          const t = segLen === 0 ? 0 : (d-dists[i-1])/segLen;
+          const a = pts[i-1], b = pts[i];
+          return {
+            x: a.x + (b.x-a.x)*t,
+            y: a.y + (b.y-a.y)*t,
+            angle: Math.atan2(b.y-a.y, b.x-a.x)
+          };
+        }
+      }
+      return {x:pts[pts.length-1].x, y:pts[pts.length-1].y, angle:0};
+    }
+
+    function buildStaticLayer(){
+      staticLayer = document.createElement('canvas');
+      staticLayer.width = W; staticLayer.height = H;
+      staticCtx = staticLayer.getContext('2d');
+      staticCtx.lineJoin = 'round';
+      paths.forEach(tr=>{
+        staticCtx.beginPath();
+        tr.pts.forEach((p,i)=> i===0 ? staticCtx.moveTo(p.x,p.y) : staticCtx.lineTo(p.x,p.y));
+        staticCtx.strokeStyle = `rgba(${tr.tone},0.16)`;
+        staticCtx.lineWidth = 1;
+        staticCtx.stroke();
+        tr.pts.forEach((p,i)=>{
+          if(i===0 || i===tr.pts.length-1) return;
+          staticCtx.beginPath();
+          staticCtx.arc(p.x,p.y,1.8,0,Math.PI*2);
+          staticCtx.fillStyle = `rgba(${tr.tone},0.35)`;
+          staticCtx.fill();
+        });
+        // Punto terminal tipo "pad" de circuito
+        const end = tr.pts[tr.pts.length-1];
+        staticCtx.beginPath();
+        staticCtx.arc(end.x,end.y,3,0,Math.PI*2);
+        staticCtx.strokeStyle = `rgba(${tr.tone},0.3)`;
+        staticCtx.lineWidth = 1;
+        staticCtx.stroke();
+      });
+    }
+
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+
+      const step = W < 700 ? 34 : 46;
+      const count = Math.min(34, Math.max(14, Math.floor((W*H)/60000)));
+      paths = Array.from({length:count}, ()=>{
+        const trace = pathLengths(buildTrace(step));
+        return {
+          ...trace,
+          tone: Math.random() < 0.72 ? GOLD : SILVER,
+          pulses: Array.from({length: Math.random() < 0.35 ? 2 : 1}, ()=>({
+            d: rand(0, trace.total),
+            speed: rand(38, 78),
+            delay: 0
+          }))
+        };
+      });
+      buildStaticLayer();
+    }
+
+    let last = performance.now();
+    function step(now){
+      const dt = Math.min((now-last)/1000, 0.05);
+      last = now;
+      ctx.clearRect(0,0,W,H);
+      ctx.drawImage(staticLayer,0,0,W,H);
+
+      paths.forEach(tr=>{
+        tr.pulses.forEach(p=>{
+          if(p.delay > 0){ p.delay -= dt; return; }
+          p.d += p.speed*dt;
+          if(p.d > tr.total){
+            p.d = 0;
+            p.delay = rand(0.4, 2.2);
+          }
+          const pos = pointAtDistance(tr, p.d);
+          const tailPos = pointAtDistance(tr, Math.max(0, p.d - 34));
+
+          const grad = ctx.createLinearGradient(tailPos.x, tailPos.y, pos.x, pos.y);
+          grad.addColorStop(0, `rgba(${tr.tone},0)`);
+          grad.addColorStop(1, `rgba(${GOLD_BRIGHT},0.9)`);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(tailPos.x, tailPos.y);
+          ctx.lineTo(pos.x, pos.y);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${GOLD_BRIGHT},0.95)`;
+          ctx.shadowColor = `rgba(${GOLD_BRIGHT},0.9)`;
+          ctx.shadowBlur = 8;
+          ctx.arc(pos.x, pos.y, 2.1, 0, Math.PI*2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+      });
+
+      if(!reduceMotion) requestAnimationFrame(step);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    if(reduceMotion){
+      ctx.drawImage(staticLayer,0,0,W,H);
+    } else {
+      requestAnimationFrame(step);
+    }
+  })();
+
+  /* ===== Asistente virtual KRV: apertura del panel y respuestas guiadas ===== */
+  (function(){
+    const toggle = document.getElementById('botToggle');
+    const panel = document.getElementById('botPanel');
+    const closeBtn = document.getElementById('botClose');
+    const messages = document.getElementById('botMessages');
+    const form = document.getElementById('botForm');
+    const input = document.getElementById('botInput');
+    const quickChips = document.querySelectorAll('.bot-chip');
+    if(!toggle || !panel) return;
+
+    const WA_LINK = 'https://wa.me/message/NOT4V32PJY5PK1';
+
+    const replies = {
+      servicios: `Trabajamos en 4 módulos: <strong>Redes e Infraestructura</strong>, <strong>Ciberseguridad</strong>, <strong>Licenciamiento & Software</strong> y <strong>Soporte Técnico 24/7</strong>. ¿Sobre cuál te gustaría más detalle?`,
+      cotizar: `Con gusto. Para armar tu cotización necesito saber qué equipo o servicio buscas. Puedes escribirlo aquí o directo con un ingeniero por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a>.`,
+      soporte: `Nuestro Helpdesk B2B atiende 24/7. Para soporte inmediato lo más rápido es escribir por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a> y un ingeniero te atiende directo.`,
+      horario: `Nuestro equipo de soporte técnico está disponible 24/7. El área comercial y de proyectos atiende en horario hábil, pero puedes dejar tu mensaje por WhatsApp en cualquier momento.`,
+      redes: `Diseñamos redes estructuradas, Wi-Fi empresarial, conectividad satelital y montaje/virtualización de servidores On-Premise e híbridos.`,
+      ciberseguridad: `Hacemos auditorías de seguridad, protección contra malware/ransomware, firewalls avanzados, backup en la nube y recuperación ante desastres (DRaaS).`,
+      licencia: `Vendemos y gestionamos licenciamiento 100% oficial: Windows 11 Pro, Microsoft 365, Office y software corporativo a medida.`,
+      laptop: `Tenemos laptops empresariales, ultrabooks corporativos, estaciones móviles de diseño y equipos gamer de alto rendimiento.`,
+      precio: `Los precios varían según el equipo o servicio y el volumen. Cuéntame qué necesitas y te paso el detalle, o cotiza directo con un ingeniero por WhatsApp.`,
+      contacto: `Puedes escribirnos al ${'3123456372'.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3')}, al correo krivont@gmail.com o por WhatsApp cuando gustes.`,
+      gracias: `¡Con gusto! Si necesitas algo más, aquí estaré.`,
+      default: `Puedo orientarte sobre redes, ciberseguridad, licenciamiento y soporte técnico. Para cotizaciones o dudas puntuales, lo más ágil es hablar directo con un ingeniero por <a href="${WA_LINK}" target="_blank" rel="noopener">WhatsApp</a>.`
+    };
+
+    function addMessage(text, outgoing){
+      const div = document.createElement('div');
+      div.className = 'bot-msg ' + (outgoing ? 'bot-msg-out' : 'bot-msg-in');
+      div.innerHTML = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function matchReply(text){
+      const t = text.toLowerCase();
+      if(/(cotiz|precio|costo|vale|cuanto)/.test(t)) return replies.precio;
+      if(/(red|wifi|internet|cableado|servidor)/.test(t)) return replies.redes;
+      if(/(seguridad|virus|ransom|hackeo|firewall|respaldo|backup)/.test(t)) return replies.ciberseguridad;
+      if(/(licencia|windows|office|365|software)/.test(t)) return replies.licencia;
+      if(/(laptop|portatil|pc|computador|equipo)/.test(t)) return replies.laptop;
+      if(/(soporte|ayuda|falla|problema|no funciona)/.test(t)) return replies.soporte;
+      if(/(horario|hora|abierto|atienden)/.test(t)) return replies.horario;
+      if(/(contacto|telefono|correo|whatsapp|numero)/.test(t)) return replies.contacto;
+      if(/(gracias|genial|perfecto)/.test(t)) return replies.gracias;
+      if(/(servicio|ofrecen|hacen)/.test(t)) return replies.servicios;
+      return replies.default;
+    }
+
+    function openPanel(){
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      toggle.setAttribute('aria-expanded','true');
+      setTimeout(()=>input && input.focus(), 200);
+    }
+    function closePanel(){
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+      toggle.setAttribute('aria-expanded','false');
+    }
+
+    toggle.addEventListener('click', ()=>{
+      panel.classList.contains('open') ? closePanel() : openPanel();
+    });
+    closeBtn.addEventListener('click', closePanel);
+
+    quickChips.forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        const key = chip.getAttribute('data-q');
+        addMessage(chip.textContent, true);
+        setTimeout(()=> addMessage(replies[key] || replies.default, false), 380);
+      });
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const val = input.value.trim();
+      if(!val) return;
+      addMessage(val, true);
+      input.value = '';
+      setTimeout(()=> addMessage(matchReply(val), false), 420);
+    });
+  })();
 
   const burger = document.querySelector('.burger');
   const navLinks = document.querySelector('.nav-links');
